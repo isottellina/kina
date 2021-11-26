@@ -1,4 +1,5 @@
 default=0
+timeout=0
 
 menuentry 'kina' {
           multiboot2 /boot/kina

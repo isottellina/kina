@@ -25,12 +25,18 @@ kina.iso: kina iso/boot/grub/grub.cfg
 	cp kina iso/boot/kina
 	grub-mkrescue -o $@ iso
 
-iso/boot/grub/grub.cfg:
+iso/boot/grub/grub.cfg: grub.cfg.example
 	mkdir -p iso/boot/grub/
 	cp grub.cfg.example $@
 
 obj:
 	mkdir -p obj
+
+bochs: kina.iso
+	bochs -f bochsrc.txt -q
+
+qemu: kina.iso
+	qemu-system-x86_64 -cdrom kina.iso -m 32
 
 clean:
 	rm -rf iso obj
