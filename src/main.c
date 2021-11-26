@@ -1,8 +1,8 @@
 #include"tty.h"
 
-int kmain() {
+int kmain(void *header) {
     tty_clear_screen();
-    tty_prints("Hello world!");
+    tty_printf("Hello world! %p", header);
 
     return 0;
 }

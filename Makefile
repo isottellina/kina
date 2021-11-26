@@ -3,7 +3,7 @@ PLATFORM=x86_64-elf-
 CC=$(PLATFORM)gcc
 AS=nasm
 
-CFLAGS=-nostdlib -nostdinc -fno-builtin -m32 -fno-stack-protector -nostartfiles -nodefaultlibs -Wall
+CFLAGS=-nostdlib -fno-builtin -m32 -fno-stack-protector -nostartfiles -nodefaultlibs -Wall
 
 SOURCES=$(wildcard src/*.c) $(wildcard src/*.S)
 OBJS=$(patsubst src/%,obj/%,$(patsubst %.S,%.o,$(patsubst %.c,%.o,$(SOURCES))))

@@ -22,8 +22,8 @@ mbend:
 section .text
 entry:
     mov esp, stack_end
-    mov eax, 0xAAAAAAAA
 
+    push ebx
     call kmain
 .loop:
     jmp .loop
