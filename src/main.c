@@ -1,7 +1,8 @@
-int kmain() {
-    volatile char* vga_buffer = (char *)0xb8000;
+#include"tty.h"
 
-    *vga_buffer = 'a';
+int kmain() {
+    tty_clear_screen();
+    tty_prints("Hello world!");
 
     return 0;
 }

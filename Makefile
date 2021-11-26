@@ -3,7 +3,7 @@ PLATFORM=x86_64-elf-
 CC=$(PLATFORM)gcc
 AS=nasm
 
-CFLAGS=-nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall
+CFLAGS=-nostdlib -nostdinc -fno-builtin -m32 -fno-stack-protector -nostartfiles -nodefaultlibs -Wall
 
 SOURCES=$(wildcard src/*.c) $(wildcard src/*.S)
 OBJS=$(patsubst src/%,obj/%,$(patsubst %.S,%.o,$(patsubst %.c,%.o,$(SOURCES))))
@@ -13,13 +13,13 @@ OBJS=$(patsubst src/%,obj/%,$(patsubst %.S,%.o,$(patsubst %.c,%.o,$(SOURCES))))
 all: kina
 
 kina: $(OBJS) linker.ld
-	ld -Tlinker.ld -melf_x86_64 $(OBJS) -o $@
+	ld -Tlinker.ld -melf_i386 $(OBJS) -o $@
 
 obj/%.o: src/%.S obj
-	$(AS) -f elf64 $< -o $@
+	$(AS) -f elf32 $< -o $@
 
 obj/%.o: src/%.c obj
-	$(CC) $< -c $(CFLAGS) -o $@
+	$(CC) $< -c -m32 $(CFLAGS) -o $@
 
 kina.iso: kina iso/boot/grub/grub.cfg
 	cp kina iso/boot/kina
