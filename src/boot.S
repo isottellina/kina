@@ -1,4 +1,5 @@
 global entry
+extern kmain
 
     MAGIC_NUMBER equ 0xE85250D6
     ARCH equ 0
@@ -22,6 +23,8 @@ section .text
 entry:
     mov esp, stack_end
     mov eax, 0xAAAAAAAA
+
+    call kmain
 .loop:
     jmp .loop
 
