@@ -5,7 +5,8 @@ AS=nasm
 
 CFLAGS=-nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall
 
-OBJS=obj/boot.o obj/main.o
+SOURCES=$(wildcard src/*.c) $(wildcard src/*.S)
+OBJS=$(patsubst src/%,obj/%,$(patsubst %.S,%.o,$(patsubst %.c,%.o,$(SOURCES))))
 
 .PHONY: clean
 
@@ -29,7 +30,7 @@ iso/boot/grub/grub.cfg:
 	cp grub.cfg.example $@
 
 obj:
-	mkdir obj
+	mkdir -p obj
 
 clean:
 	rm -rf iso obj
