@@ -8,10 +8,10 @@ AS=nasm
 all: kina
 
 kina: boot.o linker.ld
-	ld -Tlinker.ld -melf_i386 $< -o $@
+	ld -Tlinker.ld -melf_x86_64 $< -o $@
 
 boot.o: src/boot.S
-	$(AS) -f elf32 $^ -o $@
+	$(AS) -f elf64 $^ -o $@
 
 kina.iso: kina iso/boot/grub/grub.cfg
 	cp kina iso/boot/kina
