@@ -12,19 +12,36 @@ void tty_clear_screen(void) {
         vga_buffer[i << 1] = ' ';
 }
 
+void _increase_line() {
+    cursor_x = 0;
+    cursor_y++;
+
+    if (cursor_y == 25) {
+        cursor_y = 24;
+
+        // Scroll everything one line
+        for (int i = 0; i < (80 * 24); i++) {
+            vga_buffer[i << 1] = vga_buffer[(i + 80) << 1];
+        }
+
+        // Empty out other line
+        for (int i = 0; i < 80; i++) {
+            vga_buffer[POSITION(i, 24)] = ' ';
+        }
+    }
+}
+
 int tty_printc(char c) {
     switch (c) {
         case '\n':
-            cursor_x = 0;
-            cursor_y++;
+            _increase_line();
             break;
         default:
             vga_buffer[POSITION(cursor_x, cursor_y)] = c;
 
             cursor_x++;
             if (cursor_x == 80) {
-                cursor_x = 0;
-                cursor_y++;
+                _increase_line();
             }
             break;
     }
